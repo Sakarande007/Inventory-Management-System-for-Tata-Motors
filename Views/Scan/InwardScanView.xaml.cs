@@ -1,0 +1,62 @@
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
+using PaintShopIMS.ViewModels;
+
+namespace PaintShopIMS.Views.Scan
+{
+    public partial class InwardScanView : UserControl
+    {
+        private readonly Storyboard _slideIn;
+
+        public InwardScanView()
+        {
+            InitializeComponent();
+            _slideIn = BuildSlideInAnimation();
+
+            // Subscribe to VM changes when DataContext is set
+            DataContextChanged += OnDataContextChanged;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue is InwardScanViewModel oldVm)
+                oldVm.PropertyChanged -= OnVmPropertyChanged;
+
+            if (e.NewValue is InwardScanViewModel newVm)
+                newVm.PropertyChanged += OnVmPropertyChanged;
+        }
+
+        private void OnVmPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(InwardScanViewModel.StatusMessage))
+            {
+                if (sender is InwardScanViewModel vm && !string.IsNullOrEmpty(vm.StatusMessage))
+                    _slideIn.Begin(lblStatus, true);
+            }
+        }
+
+        private Storyboard BuildSlideInAnimation()
+        {
+            var sb = new Storyboard();
+            var t = new DoubleAnimation { From = -20, To = 0, Duration = new System.Windows.Duration(System.TimeSpan.FromSeconds(0.15)) };
+            Storyboard.SetTargetProperty(t, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
+            var o = new DoubleAnimation { From = 0, To = 1, Duration = new System.Windows.Duration(System.TimeSpan.FromSeconds(0.15)) };
+            Storyboard.SetTargetProperty(o, new PropertyPath(UIElement.OpacityProperty));
+            sb.Children.Add(t);
+            sb.Children.Add(o);
+            return sb;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e) => _txtScan.Focus();
+
+        private void TxtScan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && DataContext is InwardScanViewModel vm)
+                if (vm.ProcessScanCommand.CanExecute(null))
+                    vm.ProcessScanCommand.Execute(null);
+        }
+    }
+}

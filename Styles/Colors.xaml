@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Colors as SolidColorBrushes -->
+    <SolidColorBrush x:Key="NavyDarkBrush" Color="#0F1C3A"/>
+    <SolidColorBrush x:Key="NavyMidBrush" Color="#1A2F5E"/>
+    <SolidColorBrush x:Key="AccentBlueBrush" Color="#1E6FD9"/>
+    <SolidColorBrush x:Key="LightBgBrush" Color="#F4F6FA"/>
+    <SolidColorBrush x:Key="CardWhiteBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="#2E7D32"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#C62828"/>
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="#1A1A2E"/>
+    <SolidColorBrush x:Key="TextMutedBrush" Color="#64748B"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#E2E8F0"/>
+
+    <!-- Font Sizes -->
+    <sys:Double x:Key="TitleSize">20</sys:Double>
+    <sys:Double x:Key="SectionSize">13</sys:Double>
+    <sys:Double x:Key="BodySize">13</sys:Double>
+    <sys:Double x:Key="CaptionSize">11</sys:Double>
+    
+</ResourceDictionary>
